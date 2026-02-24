@@ -1,0 +1,231 @@
+{
+    "name": "index",
+    "operation-type": "bulk-index",
+    "bulk-size": {{bulk_size | default(10000)}},
+    "ingest-percentage": {{ingest_percentage | default(100)}}
+  },
+  {
+    "name": "update",
+    "operation-type": "bulk-index",
+    "bulk-size": {{bulk_size | default(10000)}},
+    "ingest-percentage": {{ingest_percentage | default(100)}},
+    "conflicts": "{{conflicts | default('random')}}",
+    "on-conflict": "{{on_conflict | default('update')}}",
+    "conflict-probability": {{conflict_probability | default(25)}},
+    "recency": {{recency | default(0)}}
+  },
+  {
+    "name": "wait-until-merges-finish",
+    "operation-type": "index-stats",
+    "condition": {
+      "path": "_all.total.merges.current",
+      "expected-value": 0
+    },
+    "retry-until-success": true,
+    "include-in-reporting": false,
+    "collection": "_all"
+  },
+  {
+    "name": "match-all",
+    "operation-type": "search",
+    "body": {
+      "query": "*:*"
+    }
+  },
+  {
+    "name": "range",
+    "operation-type": "search",
+    "body": {
+      "query": "total_amount:[5 TO 15]"
+    }
+  },
+  {
+    "name": "distance_amount_agg",
+    "operation-type": "search",
+    "body": {
+      "query": "*:*",
+      "filter": [
+        "trip_distance:[0 TO 50]"
+      ],
+      "limit": 0,
+      "facet": {
+        "distance_histo": {
+          "type": "range",
+          "field": "trip_distance",
+          "gap": 1,
+          "start": 0,
+          "end": 1000000
+        }
+      }
+    }
+  },
+  {
+    "name": "autohisto_agg",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2015-01-21T00:00:00Z]",
+      "limit": 0
+    }
+  },
+  {
+    "name": "date_histogram_agg",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2015-01-21T00:00:00Z]",
+      "limit": 0,
+      "facet": {
+        "dropoffs_over_time": {
+          "type": "range",
+          "field": "dropoff_datetime",
+          "gap": "+1DAY",
+          "start": "NOW/YEAR-10YEAR",
+          "end": "NOW/YEAR+1YEAR"
+        }
+      }
+    }
+  },
+  {
+    "name": "date_histogram_calendar_interval",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01 00:00:00 TO 2016-01-01 00:00:00]",
+      "limit": 0,
+      "facet": {
+        "dropoffs_over_time": {
+          "type": "range",
+          "field": "dropoff_datetime",
+          "gap": "+1MONTH",
+          "start": "NOW/YEAR-10YEAR",
+          "end": "NOW/YEAR+1YEAR"
+        }
+      }
+    }
+  },
+  {
+    "name": "date_histogram_calendar_interval_with_tz",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01 00:00:00 TO 2016-01-01 00:00:00]",
+      "limit": 0,
+      "facet": {
+        "dropoffs_over_time": {
+          "type": "range",
+          "field": "dropoff_datetime",
+          "gap": "+1MONTH",
+          "start": "NOW/YEAR-10YEAR",
+          "end": "NOW/YEAR+1YEAR"
+        }
+      }
+    }
+  },
+  {
+    "name": "date_histogram_fixed_interval",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01 00:00:00 TO 2016-01-01 00:00:00]",
+      "limit": 0,
+      "facet": {
+        "dropoffs_over_time": {
+          "type": "range",
+          "field": "dropoff_datetime",
+          "gap": "+1MONTH",
+          "start": "NOW/YEAR-10YEAR",
+          "end": "NOW/YEAR+1YEAR"
+        }
+      }
+    }
+  },
+  {
+    "name": "date_histogram_fixed_interval_with_tz",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01 00:00:00 TO 2016-01-01 00:00:00]",
+      "limit": 0,
+      "facet": {
+        "dropoffs_over_time": {
+          "type": "range",
+          "field": "dropoff_datetime",
+          "gap": "+1MONTH",
+          "start": "NOW/YEAR-10YEAR",
+          "end": "NOW/YEAR+1YEAR"
+        }
+      }
+    }
+  },
+  {
+    "name": "date_histogram_fixed_interval_with_metrics",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01 00:00:00 TO 2016-01-01 00:00:00]",
+      "limit": 0,
+      "facet": {
+        "dropoffs_over_time": {
+          "type": "range",
+          "field": "dropoff_datetime",
+          "gap": "+1MONTH",
+          "start": "NOW/YEAR-10YEAR",
+          "end": "NOW/YEAR+1YEAR"
+        }
+      }
+    }
+  },
+  {
+    "name": "auto_date_histogram",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01 00:00:00 TO 2016-01-01 00:00:00]",
+      "limit": 0
+    }
+  },
+  {
+    "name": "auto_date_histogram_with_tz",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01 00:00:00 TO 2016-01-01 00:00:00]",
+      "limit": 0
+    }
+  },
+  {
+    "name": "auto_date_histogram_with_metrics",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01 00:00:00 TO 2016-01-01 00:00:00]",
+      "limit": 0
+    }
+  },
+  {
+    "name": "desc_sort_tip_amount",
+    "operation-type": "search",
+    "body": {
+      "query": "*:*",
+      "sort": "tip_amount desc"
+    },
+    "collection": "nyc_taxis"
+  },
+  {
+    "name": "asc_sort_tip_amount",
+    "operation-type": "search",
+    "body": {
+      "query": "*:*",
+      "sort": "tip_amount asc"
+    },
+    "collection": "nyc_taxis"
+  },
+  {
+    "name": "desc_sort_passenger_count",
+    "operation-type": "search",
+    "body": {
+      "query": "*:*",
+      "sort": "passenger_count desc"
+    },
+    "collection": "nyc_taxis"
+  },
+  {
+    "name": "asc_sort_passenger_count",
+    "operation-type": "search",
+    "body": {
+      "query": "*:*",
+      "sort": "passenger_count asc"
+    },
+    "collection": "nyc_taxis"
+  }
