@@ -16,14 +16,10 @@
   },
   {
     "name": "wait-until-merges-finish",
-    "operation-type": "index-stats",
-    "condition": {
-      "path": "_all.total.merges.current",
-      "expected-value": 0
-    },
-    "retry-until-success": true,
-    "include-in-reporting": false,
-    "collection": "_all"
+    "operation-type": "wait-for-merges",
+    "retry-wait-period": 2.0,
+    "max-wait-seconds": 600,
+    "include-in-reporting": false
   },
   {
     "name": "match-all",
@@ -199,8 +195,7 @@
     "body": {
       "query": "*:*",
       "sort": "tip_amount desc"
-    },
-    "collection": "nyc_taxis"
+    }
   },
   {
     "name": "asc_sort_tip_amount",
@@ -208,8 +203,7 @@
     "body": {
       "query": "*:*",
       "sort": "tip_amount asc"
-    },
-    "collection": "nyc_taxis"
+    }
   },
   {
     "name": "desc_sort_passenger_count",
@@ -217,8 +211,7 @@
     "body": {
       "query": "*:*",
       "sort": "passenger_count desc"
-    },
-    "collection": "nyc_taxis"
+    }
   },
   {
     "name": "asc_sort_passenger_count",
@@ -226,6 +219,5 @@
     "body": {
       "query": "*:*",
       "sort": "passenger_count asc"
-    },
-    "collection": "nyc_taxis"
+    }
   }
