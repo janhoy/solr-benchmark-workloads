@@ -49,6 +49,7 @@
           "type": "range",
           "field": "trip_distance",
           "gap": 1,
+          "mincount": 1,
           "start": 0,
           "end": 1000000
         }
@@ -74,6 +75,7 @@
           "type": "range",
           "field": "dropoff_datetime",
           "gap": "+1DAY",
+          "mincount": 1,
           "start": "NOW/YEAR-10YEAR",
           "end": "NOW/YEAR+1YEAR"
         }
@@ -91,6 +93,7 @@
           "type": "range",
           "field": "dropoff_datetime",
           "gap": "+1MONTH",
+          "mincount": 1,
           "start": "NOW/YEAR-10YEAR",
           "end": "NOW/YEAR+1YEAR"
         }
@@ -108,6 +111,7 @@
           "type": "range",
           "field": "dropoff_datetime",
           "gap": "+1MONTH",
+          "mincount": 1,
           "start": "NOW/YEAR-10YEAR",
           "end": "NOW/YEAR+1YEAR"
         }
@@ -125,6 +129,7 @@
           "type": "range",
           "field": "dropoff_datetime",
           "gap": "+1MONTH",
+          "mincount": 1,
           "start": "NOW/YEAR-10YEAR",
           "end": "NOW/YEAR+1YEAR"
         }
@@ -142,6 +147,7 @@
           "type": "range",
           "field": "dropoff_datetime",
           "gap": "+1MONTH",
+          "mincount": 1,
           "start": "NOW/YEAR-10YEAR",
           "end": "NOW/YEAR+1YEAR"
         }
@@ -159,6 +165,7 @@
           "type": "range",
           "field": "dropoff_datetime",
           "gap": "+1MONTH",
+          "mincount": 1,
           "start": "NOW/YEAR-10YEAR",
           "end": "NOW/YEAR+1YEAR"
         }
