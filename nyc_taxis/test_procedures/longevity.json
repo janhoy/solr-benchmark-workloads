@@ -61,12 +61,6 @@
                 "clients": {{ distance_amount_agg_search_clients or search_clients | default(1) }}
               },
               {
-                "operation": "autohisto_agg",
-                "time-period": {{ autohisto_agg_time_period or time_period | default(300) | tojson }},
-                "target-throughput": {{ autohisto_agg_target_throughput or target_throughput | default(1.5) | tojson }},
-                "clients": {{ autohisto_agg_search_clients or search_clients | default(1) }}
-              },
-              {
                 "operation": "date_histogram_agg",
                 "time-period": {{ date_histogram_agg_time_period or time_period | default(300) | tojson }},
                 "target-throughput": {{ date_histogram_agg_target_throughput or target_throughput | default(1.5) | tojson }},
@@ -152,12 +146,6 @@
                 "time-period": {{ distance_amount_agg_time_period or time_period | default(300) | tojson }},
                 "target-throughput": {{ distance_amount_agg_target_throughput or target_throughput | default(2) | tojson }},
                 "clients": {{ distance_amount_agg_search_clients or search_clients | default(1) }}
-              },
-              {
-                "operation": "autohisto_agg",
-                "time-period": {{ autohisto_agg_time_period or time_period | default(300) | tojson }},
-                "target-throughput": {{ autohisto_agg_target_throughput or target_throughput | default(1.5) | tojson }},
-                "clients": {{ autohisto_agg_search_clients or search_clients | default(1) }}
               },
               {
                 "operation": "date_histogram_agg",
