@@ -30,7 +30,7 @@ complete set of search, aggregation, and sort queries.
 | `match_all_iterations` | `100` | Measured iterations for `match-all` |
 | `range_warmup_iterations` | `50` | Warmup for `range` |
 | `range_iterations` | `100` | Measured iterations for `range` |
-| `distance_amount_agg_iterations` | `50` | Measured iterations for `distance_amount_agg` |
+| `distance_amount_facet_iterations` | `50` | Measured iterations for `distance_amount_facet` |
 | *(all other search ops)* | see README | Follow the `<op>_warmup_iterations` / `<op>_iterations` pattern |
 
 ---
