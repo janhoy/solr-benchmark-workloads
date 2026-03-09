@@ -1,6 +1,9 @@
 {
-    "operation": {
-      "operation-type": "create-collection",
-      "settings": {{index_settings | default(default_index_settings | default({})) | tojson}}
-    }
+  "operation": {
+    "operation-type": "create-collection",
+    "collection": "geonames",
+    "configset-path": "configsets/geonames",
+    "num-shards": {{ num_shards | default(1) }},
+    "replication-factor": {{ replication_factor | default(1) }}
   }
+}

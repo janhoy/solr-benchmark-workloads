@@ -26,13 +26,8 @@ class PureTermsQueryParamSource(QueryParamSource):
         query_terms.append(str(random.randint(1, 100)))  # avoid caching
         result = {
             "body": {
-                "query": {
-                    "terms": {
-                        "name.raw": query_terms
-                    }
-                }
-            },
-            "index": None
+                "query": "{!terms f=name_raw}" + ",".join(query_terms)
+            }
         }
         if "cache" in self._params:
             result["cache"] = self._params["cache"]
@@ -46,26 +41,9 @@ class FilteredTermsQueryParamSource(QueryParamSource):
         query_terms.append(str(random.randint(1, 1000)))  # avoid caching
         result = {
             "body": {
-                "query": {
-                    "bool": {
-                        "must": [
-                            {
-                                "match": {
-                                    "feature_class.raw": "T"
-                                }
-                            }
-                        ],
-                        "filter": [
-                            {
-                                "terms": {
-                                    "name.raw": query_terms
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "index": None
+                "query": "feature_class_raw:T",
+                "filter": "{!terms f=name_raw}" + ",".join(query_terms)
+            }
         }
         if "cache" in self._params:
             result["cache"] = self._params["cache"]
@@ -79,35 +57,14 @@ class ProhibitedTermsQueryParamSource(QueryParamSource):
         query_terms.append(str(random.randint(1, 1000)))  # avoid caching
         result = {
             "body": {
-                "query": {
-                    "bool": {
-                        "must": [
-                            {
-                                "match": {
-                                    "feature_class.raw": "A"
-                                }
-                            }
-                        ],
-                        "must_not": [
-                            {
-                                "terms": {
-                                    "name.raw": query_terms
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "index": None
+                "query": "feature_class_raw:A",
+                "filter": "-({!terms f=name_raw}" + ",".join(query_terms) + ")"
+            }
         }
         if "cache" in self._params:
             result["cache"] = self._params["cache"]
 
         return result
-
-
-def refresh(es, params):
-    es.indices.refresh(index=params.get("index", "_all"))
 
 
 def register(registry):

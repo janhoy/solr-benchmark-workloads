@@ -36,104 +36,38 @@
     }
   },
   {
-    "name": "country_agg_uncached",
+    "name": "country_facet_uncached",
     "operation-type": "search",
     "body": {
-      "size": 0,
-      "aggs": {
+      "query": "*:*",
+      "limit": 0,
+      "facet": {
         "country_population": {
-          "terms": {
-            "field": "country_code.raw"
-          },
-          "aggs": {
-            "sum_population": {
-              "sum": {
-                "field": "population"
-              }
-            }
+          "type": "terms",
+          "field": "country_code_raw",
+          "facet": {
+            "sum_population": "sum(population)"
           }
         }
       }
     }
   },
   {
-    "name": "country_agg_cached",
+    "name": "country_facet_cached",
     "operation-type": "search",
     "cache": true,
     "body": {
-      "size": 0,
-      "aggs": {
+      "query": "*:*",
+      "limit": 0,
+      "facet": {
         "country_population": {
-          "terms": {
-            "field": "country_code.raw"
-          },
-          "aggs": {
-            "sum_population": {
-              "sum": {
-                "field": "population"
-              }
-            }
+          "type": "terms",
+          "field": "country_code_raw",
+          "facet": {
+            "sum_population": "sum(population)"
           }
         }
       }
-    }
-  },
-  {
-    "name": "scroll",
-    "operation-type": "search",
-    "pages": 25,
-    "results-per-page": 1000,
-    "body": {
-      "query": "*:*"
-    }
-  },
-  {
-    "name": "expression",
-    "operation-type": "search",
-    "body": {
-      "query": "*:*"
-    }
-  },
-  {
-    "name": "painless_static",
-    "operation-type": "search",
-    "body": {
-      "query": "*:*"
-    }
-  },
-  {
-    "name": "painless_dynamic",
-    "operation-type": "search",
-    "body": {
-      "query": "*:*"
-    }
-  },
-  {
-    "name": "decay_geo_gauss_function_score",
-    "operation-type": "search",
-    "body": {
-      "query": "*:*"
-    }
-  },
-  {
-    "name": "decay_geo_gauss_script_score",
-    "operation-type": "search",
-    "body": {
-      "query": "*:*"
-    }
-  },
-  {
-    "name": "field_value_function_score",
-    "operation-type": "search",
-    "body": {
-      "query": "*:*"
-    }
-  },
-  {
-    "name": "field_value_script_score",
-    "operation-type": "search",
-    "body": {
-      "query": "*:*"
     }
   },
   {
@@ -168,23 +102,7 @@
     }
   },
   {
-    "name": "asc_sort_with_after_population",
-    "operation-type": "search",
-    "body": {
-      "query": "*:*",
-      "sort": "population asc"
-    }
-  },
-  {
     "name": "desc_sort_geonameid",
-    "operation-type": "search",
-    "body": {
-      "query": "*:*",
-      "sort": "geonameid desc"
-    }
-  },
-  {
-    "name": "desc_sort_with_after_geonameid",
     "operation-type": "search",
     "body": {
       "query": "*:*",
@@ -200,56 +118,16 @@
     }
   },
   {
-    "name": "asc_sort_with_after_geonameid",
+    "name": "numeric-term-cardinality-facet-high",
     "operation-type": "search",
     "body": {
       "query": "*:*",
-      "sort": "geonameid asc"
-    }
-  },
-  {
-    "name": "significant_text_selective",
-    "operation-type": "search",
-    "body": {
-      "query": "alternatenames:street",
-      "limit": 0
-    }
-  },
-  {
-    "name": "significant_text_sampled_selective",
-    "operation-type": "search",
-    "body": {
-      "query": "alternatenames:street",
-      "limit": 0
-    }
-  },
-  {
-    "name": "significant_text_unselective",
-    "operation-type": "search",
-    "body": {
-      "query": "timezone:America",
-      "limit": 0
-    }
-  },
-  {
-    "name": "significant_text_sampled_unselective",
-    "operation-type": "search",
-    "body": {
-      "query": "timezone:America",
-      "limit": 0
-    }
-  },
-  {
-    "name": "numeric-term-cardinality-agg-high",
-    "operation-type": "search",
-    "body": {
-      "size": 0,
-      "aggs": {
+      "limit": 0,
+      "facet": {
         "geonameids": {
-          "terms": {
-            "field": "geonameid",
-            "size": 50000
-          }
+          "type": "terms",
+          "field": "geonameid",
+          "limit": 50000
         }
       }
     }
