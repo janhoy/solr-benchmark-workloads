@@ -3,9 +3,7 @@
       "description": "Indexes the whole document corpus using Solr default settings. Document ids are unique so all index operations are append only. After that a couple of queries are run.",
       "default": true,
       "schedule": [
-        {% with default_index_settings={}, index_name="geonames" %}
         {{ benchmark.collect(parts="../common_operations/workload_setup.json") }},
-        {% endwith %}
         {
           "operation": "match-all",
           "warmup-iterations": {{ match_all_warmup_iterations or warmup_iterations | default(500) | tojson }},
@@ -103,8 +101,6 @@
       "name": "append-no-conflicts-index-only",
       "description": "Indexes the whole document corpus using Solr default settings. Document ids are unique so all index operations are append only.",
       "schedule": [
-        {% with default_index_settings={}, index_name="geonames" %}
         {{ benchmark.collect(parts="../common_operations/workload_setup.json") }}
-        {% endwith %}
       ]
     }

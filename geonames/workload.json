@@ -2,7 +2,6 @@
 {
   "version": 2,
   "description": "POIs from Geonames",
-  "data-url": "https://dbyiw3u3rf9yr.cloudfront.net/corpora/geonames",
   "collections": [
     {
       "name": "geonames",
