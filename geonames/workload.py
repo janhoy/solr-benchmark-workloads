@@ -25,6 +25,7 @@ class PureTermsQueryParamSource(QueryParamSource):
         query_terms = list(self.terms)  # copy
         query_terms.append(str(random.randint(1, 100)))  # avoid caching
         result = {
+            "collection": "geonames",
             "body": {
                 "query": "{!terms f=name_raw}" + ",".join(query_terms)
             }
@@ -40,6 +41,7 @@ class FilteredTermsQueryParamSource(QueryParamSource):
         query_terms = list(self.terms)  # copy
         query_terms.append(str(random.randint(1, 1000)))  # avoid caching
         result = {
+            "collection": "geonames",
             "body": {
                 "query": "feature_class_raw:T",
                 "filter": "{!terms f=name_raw}" + ",".join(query_terms)
@@ -56,9 +58,14 @@ class ProhibitedTermsQueryParamSource(QueryParamSource):
         query_terms = list(self.terms)  # copy
         query_terms.append(str(random.randint(1, 1000)))  # avoid caching
         result = {
+            "collection": "geonames",
             "body": {
-                "query": "feature_class_raw:A",
-                "filter": "-({!terms f=name_raw}" + ",".join(query_terms) + ")"
+                "query": {
+                    "bool": {
+                        "must": "feature_class_raw:A",
+                        "must_not": "{!terms f=name_raw}" + ",".join(query_terms)
+                    }
+                }
             }
         }
         if "cache" in self._params:
