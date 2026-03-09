@@ -101,17 +101,13 @@ procedures above:
 |-----------|-------|-------|
 | `match-all` | `*:*` | Full-collection match |
 | `range` | `total_amount:[5 TO 15]` | Range filter on a float field |
-| `distance_amount_agg` | `trip_distance:[0 TO 50]` + range facet | Range facet on `trip_distance` |
-| `autohisto_agg` | Date range Jan 1–21 | Count-only date query, no facet |
-| `date_histogram_agg` | Date range, `+1DAY` gap | Daily dropoff histogram |
+| `distance_amount_facet` | `trip_distance:[0 TO 50]` + range facet | Range facet on `trip_distance` |
+| `date_histogram_facet` | Date range, `+1DAY` gap | Daily dropoff histogram |
 | `date_histogram_calendar_interval` | Date range, `+1MONTH` gap | Monthly histogram |
 | `date_histogram_calendar_interval_with_tz` | Same, with timezone | Monthly histogram |
 | `date_histogram_fixed_interval` | Date range, `+1MONTH` gap | Monthly histogram (fixed) |
 | `date_histogram_fixed_interval_with_tz` | Same, with timezone | Monthly histogram (fixed) |
 | `date_histogram_fixed_interval_with_metrics` | Same, with metrics | Monthly histogram + metrics |
-| `auto_date_histogram` | Full-year date range | Count-only |
-| `auto_date_histogram_with_tz` | Full-year date range | Count-only, with timezone |
-| `auto_date_histogram_with_metrics` | Full-year date range | With metrics |
 | `desc_sort_tip_amount` | `*:*` sort `tip_amount desc` | Descending sort |
 | `asc_sort_tip_amount` | `*:*` sort `tip_amount asc` | Ascending sort |
 | `desc_sort_passenger_count` | `*:*` sort `passenger_count desc` | Descending sort |

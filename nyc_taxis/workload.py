@@ -51,16 +51,12 @@ def register(registry):
     # Register standard value sources for range queries defined in operations/default.json. 
     # These are only used if --randomization-enabled is present. 
     registry.register_standard_value_source("range", "total_amount", total_amount_source)
-    registry.register_standard_value_source("distance_amount_agg", "trip_distance", trip_distance_source)
-    registry.register_standard_value_source("autohisto_agg", "dropoff_datetime", date_source_without_hours)
-    registry.register_standard_value_source("date_histogram_agg", "dropoff_datetime", date_source_without_hours)
+    registry.register_standard_value_source("distance_amount_facet", "trip_distance", trip_distance_source)
+    registry.register_standard_value_source("date_histogram_facet", "dropoff_datetime", date_source_without_hours)
     registry.register_standard_value_source("date_histogram_calendar_interval", "dropoff_datetime", date_source_with_hours)
     registry.register_standard_value_source("date_histogram_calendar_interval_with_tz", "dropoff_datetime", date_source_with_hours)
     registry.register_standard_value_source("date_histogram_fixed_interval", "dropoff_datetime", date_source_with_hours)
     registry.register_standard_value_source("date_histogram_fixed_interval_with_tz", "dropoff_datetime", date_source_with_hours)
     registry.register_standard_value_source("date_histogram_fixed_interval_with_metrics", "dropoff_datetime", date_source_with_hours)
-    registry.register_standard_value_source("auto_date_histogram", "dropoff_datetime", date_source_with_hours)
-    registry.register_standard_value_source("auto_date_histogram_with_tz", "dropoff_datetime", date_source_with_hours)
-    registry.register_standard_value_source("auto_date_histogram_with_metrics", "dropoff_datetime", date_source_with_hours)
 
     registry.register_runner("delete-snapshot", delete_snapshot, async_runner=True)

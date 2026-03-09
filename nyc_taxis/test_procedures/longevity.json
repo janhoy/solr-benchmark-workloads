@@ -55,16 +55,16 @@
                 "clients": {{ range_search_clients or search_clients | default(1) }}
               },
               {
-                "operation": "distance_amount_agg",
-                "time-period": {{ distance_amount_agg_time_period or time_period | default(300) | tojson }},
-                "target-throughput": {{ distance_amount_agg_target_throughput or target_throughput | default(2) | tojson }},
-                "clients": {{ distance_amount_agg_search_clients or search_clients | default(1) }}
+                "operation": "distance_amount_facet",
+                "time-period": {{ distance_amount_facet_time_period or time_period | default(300) | tojson }},
+                "target-throughput": {{ distance_amount_facet_target_throughput or target_throughput | default(2) | tojson }},
+                "clients": {{ distance_amount_facet_search_clients or search_clients | default(1) }}
               },
               {
-                "operation": "date_histogram_agg",
-                "time-period": {{ date_histogram_agg_time_period or time_period | default(300) | tojson }},
-                "target-throughput": {{ date_histogram_agg_target_throughput or target_throughput | default(1.5) | tojson }},
-                "clients": {{ date_histogram_agg_search_clients or search_clients | default(1) }}
+                "operation": "date_histogram_facet",
+                "time-period": {{ date_histogram_facet_time_period or time_period | default(300) | tojson }},
+                "target-throughput": {{ date_histogram_facet_target_throughput or target_throughput | default(1.5) | tojson }},
+                "clients": {{ date_histogram_facet_search_clients or search_clients | default(1) }}
               },
               {
                 "operation": "desc_sort_tip_amount",
@@ -142,16 +142,16 @@
                 "clients": {{ range_search_clients or search_clients | default(1) }}
               },
               {
-                "operation": "distance_amount_agg",
-                "time-period": {{ distance_amount_agg_time_period or time_period | default(300) | tojson }},
-                "target-throughput": {{ distance_amount_agg_target_throughput or target_throughput | default(2) | tojson }},
-                "clients": {{ distance_amount_agg_search_clients or search_clients | default(1) }}
+                "operation": "distance_amount_facet",
+                "time-period": {{ distance_amount_facet_time_period or time_period | default(300) | tojson }},
+                "target-throughput": {{ distance_amount_facet_target_throughput or target_throughput | default(2) | tojson }},
+                "clients": {{ distance_amount_facet_search_clients or search_clients | default(1) }}
               },
               {
-                "operation": "date_histogram_agg",
-                "time-period": {{ date_histogram_agg_time_period or time_period | default(300) | tojson }},
-                "target-throughput": {{ date_histogram_agg_target_throughput or target_throughput | default(1.5) | tojson }},
-                "clients": {{ date_histogram_agg_search_clients or search_clients | default(1) }}
+                "operation": "date_histogram_facet",
+                "time-period": {{ date_histogram_facet_time_period or time_period | default(300) | tojson }},
+                "target-throughput": {{ date_histogram_facet_target_throughput or target_throughput | default(1.5) | tojson }},
+                "clients": {{ date_histogram_facet_search_clients or search_clients | default(1) }}
               },
               {
                 "operation": "desc_sort_tip_amount",

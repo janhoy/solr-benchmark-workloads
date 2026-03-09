@@ -36,7 +36,7 @@
     }
   },
   {
-    "name": "distance_amount_agg",
+    "name": "distance_amount_facet",
     "operation-type": "search",
     "body": {
       "query": "*:*",
@@ -57,7 +57,7 @@
     }
   },
   {
-    "name": "date_histogram_agg",
+    "name": "date_histogram_facet",
     "operation-type": "search",
     "body": {
       "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2015-01-21T00:00:00Z]",
