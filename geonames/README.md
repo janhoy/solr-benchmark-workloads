@@ -7,7 +7,7 @@ For further details about the semantics of individual fields, please see the [ge
 Modifications:
 
 * The original CSV data have been converted to JSON.
-* We combine the original `longitude` and `latitude` fields to a new `location` field of type geo_point.
+* We combine the original `longitude` and `latitude` fields into a new `location` field.
 
 ### Example Document
 
@@ -31,27 +31,42 @@ Modifications:
 }
 ```
 
+### Test Procedures
+
+* `append-no-conflicts` (default): Indexes the whole corpus with unique document IDs, then runs a suite of search and faceting queries.
+* `append-no-conflicts-index-only`: Indexes the whole corpus with unique document IDs, no queries.
+
 ### Parameters
 
-This workload allows the following parameters to be specified using `--workload-params`:
+This workload allows the following parameters via `--workload-params`:
 
-* `bulk_size` (default: 5000)
-* `bulk_indexing_clients` (default: 8): Number of clients that issue bulk indexing requests.
-* `ingest_percentage` (default: 100): A number between 0 and 100 that defines how much of the document corpus should be ingested.
-* `conflicts` (default: "random"): Type of id conflicts to simulate. Valid values are: 'sequential' (A document id is replaced with a document id with a sequentially increasing id), 'random' (A document id is replaced with a document id with a random other id).
-* `conflict_probability` (default: 25): A number between 0 and 100 that defines the probability of id conflicts. This requires to run the respective test_procedure. Combining ``conflicts=sequential`` and ``conflict-probability=0`` makes Benchmark generate index ids by itself, instead of relying on OpenSearch's `automatic id generation`.
-* `on_conflict` (default: "index"): Whether to use an "index" or an "update" action when simulating an id conflict.
-* `recency` (default: 0): A number between 0 and 1 that defines whether to bias towards more recent ids when simulating conflicts. See the [Benchmark docs](https://github.com/opensearch-project/OpenSearch-Benchmark/blob/main/DEVELOPER_GUIDE.md) for the full definition of this parameter. This requires to run the respective test_procedure.
-* `number_of_replicas` (default: 0)
-* `number_of_shards` (default: 5)
-* `query_cache_enabled` (default: false)
-* `requests_cache_enabled` (default: false)
-* `source_enabled` (default: true): A boolean defining whether the `_source` field is stored in the index.
-* `index_settings`: A list of index settings. Index settings defined elsewhere (e.g. `number_of_replicas`) need to be overridden explicitly.
-* `cluster_health` (default: "green"): The minimum required cluster health.
-* `error_level` (default: "non-fatal"): Available for bulk operations only to specify ignore-response-error-level.
-* `target_throughput` (default: default values for each operation): Number of requests per second, `none` for no limit.
-* `search_clients`: Number of clients that issues search requests.
+#### Indexing
+
+* `bulk_size` (default: `5000`): Number of documents per bulk indexing request.
+* `bulk_indexing_clients` (default: `8`): Number of clients that issue bulk indexing requests.
+* `ingest_percentage` (default: `100`): A number between 0 and 100 that defines how much of the document corpus should be ingested.
+* `conflicts` (default: `"random"`): Type of id conflicts to simulate. Valid values are `sequential` (a document id is replaced with a sequentially increasing id) and `random` (replaced with a random other id).
+* `conflict_probability` (default: `25`): A number between 0 and 100 that defines the probability of id conflicts. Only applies when running `index-update` operations.
+* `on_conflict` (default: `"index"`): Whether to use an `"index"` or `"update"` action when simulating an id conflict.
+* `recency` (default: `0`): A number between 0 and 1 that biases towards more recent ids when simulating conflicts. `0` means uniform distribution; `1` means always pick the most recent id.
+* `error_level` (default: `"non-fatal"`): Error handling for bulk operations. Use `"fatal"` to abort on any indexing error.
+
+#### Collection
+
+* `num_shards` (default: `1`): Number of shards for the Solr collection.
+* `replication_factor` (default: `1`): Number of NRT replica copies per shard.
+
+#### Optimize
+
+* `max_segments` (default: `1`): Target number of segments after force-merge (optimize).
+* `optimize_timeout` (default: `600`): Timeout in seconds for the optimize operation.
+
+#### Search
+
+* `target_throughput`: Global default for maximum requests per second across all search operations. Use `none` for no limit. Individual operations can be overridden with `<operation_name>_target_throughput`.
+* `search_clients` (default: `1`): Number of clients issuing search requests.
+* `warmup_iterations`: Global default warmup iterations before measurement begins.
+* `iterations`: Global default number of measured iterations per operation.
 
 ### License
 
