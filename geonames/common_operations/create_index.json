@@ -1,0 +1,6 @@
+{
+    "operation": {
+      "operation-type": "create-collection",
+      "settings": {{index_settings | default(default_index_settings | default({})) | tojson}}
+    }
+  }
