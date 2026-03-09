@@ -1,6 +1,0 @@
-{
-  "operation": {
-    "operation-type": "optimize",
-    "request-timeout": {{ request_timeout | default(60) | tojson }}
-  }
-}

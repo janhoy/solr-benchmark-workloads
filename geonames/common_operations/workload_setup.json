@@ -1,17 +1,9 @@
-{% if use_snapshot %}
-  {% with 
-  snapshot_repo=snapshot_repo,
-  snapshot_name=snapshot_name,
-  snapshot_indices=snapshot_indices,
-  snapshot_rename_pattern=snapshot_rename_pattern,
-  snapshot_rename_replacement=snapshot_rename_replacement
-  %}
-    {{ benchmark.collect(parts="restore_snapshot.json") }}
-  {% endwith %}
-{% else %}
-  {{ benchmark.collect(parts="delete_index.json") }},
-  {{ benchmark.collect(parts="create_index.json") }},
-  {{ benchmark.collect(parts="check_cluster_health.json") }},
-  {{ benchmark.collect(parts="index_append.json") }},
-  {{ benchmark.collect(parts="force_merge.json") }}
-{% endif %}
+{% with collection_name="geonames" %}
+{{ benchmark.collect(parts="../../common_operations/delete_collection.json") }},
+{% endwith %}
+{% with collection_name="geonames", configset_path="configsets/geonames" %}
+{{ benchmark.collect(parts="../../common_operations/create_collection.json") }},
+{% endwith %}
+{{ benchmark.collect(parts="../../common_operations/check_cluster_health.json") }},
+{{ benchmark.collect(parts="collection_append.json") }},
+{{ benchmark.collect(parts="../../common_operations/optimize.json") }}

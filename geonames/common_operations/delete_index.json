@@ -1,8 +1,0 @@
-{
-  "operation": {
-    "operation-type": "delete-collection",
-    "collection": "geonames",
-    "delete-configset": true,
-    "ignore-missing": true
-  }
-}

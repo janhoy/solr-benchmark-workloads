@@ -1,8 +1,0 @@
-{
-  "name": "check-cluster-health",
-  "operation": {
-    "operation-type": "raw-request",
-    "method": "GET",
-    "path": "/solr/admin/collections?action=CLUSTERSTATUS&wt=json"
-  }
-}
