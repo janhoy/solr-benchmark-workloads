@@ -74,17 +74,11 @@ This workload allows the following parameters via `--workload-params`:
 * `warmup_iterations`: Global default warmup iterations before measurement begins.
 * `iterations`: Global default number of measured iterations per operation.
 
-### Upstream attribution
-
-This workload was originally published in
-[elastic/rally-tracks](https://github.com/elastic/rally-tracks) for the Elasticsearch Rally
-benchmarking tool, and subsequently adapted by OpenSearch Benchmark contributors and then
-ported to Apache Solr Benchmark. See the repository's `NOTICE` file for the full attribution
-chain.
-
 ### License
 
-The Geonames dataset is licensed under the Creative Commons Attribution 3.0 License:
+The data originates from [GeoNames](https://www.geonames.org/) and is licensed under the
+[Creative Commons Attribution 3.0 License](https://creativecommons.org/licenses/by/3.0/).
+Use of this data requires crediting GeoNames as the source.
 
 ```
 This work is licensed under a Creative Commons Attribution 3.0 License,

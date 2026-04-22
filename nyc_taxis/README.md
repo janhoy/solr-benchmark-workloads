@@ -173,16 +173,9 @@ Per-operation overrides follow the pattern `<operation_name>_target_throughput`,
 | `on_conflict` | `update` | Action on conflict: `index` (overwrite) or `update` (partial update) |
 | `recency` | `0` | Bias towards recent IDs when choosing conflict targets (0 = uniform, 1 = most-recent) |
 
-## Upstream attribution
-
-This workload was originally published in
-[elastic/rally-tracks](https://github.com/elastic/rally-tracks) for the Elasticsearch Rally
-benchmarking tool, and subsequently adapted by OpenSearch Benchmark contributors and then
-ported to Apache Solr Benchmark. See the repository's `NOTICE` file for the full attribution
-chain.
-
 ## License
 
-The NYC TLC dataset is published under the
-[NYC Open Data Law](https://opendata.cityofnewyork.us/open-data-law/) and is available as
-public domain.
+The dataset originates from the
+[NYC Taxi and Limousine Commission (TLC) Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+and is published by the City of New York under the
+[NYC Open Data Law](https://opendata.cityofnewyork.us/open-data-law/) as public domain.
