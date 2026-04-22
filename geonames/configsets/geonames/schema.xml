@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  Geonames workload schema — adapted from OpenSearch mappings.
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements. See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Geonames workload schema for Apache Solr Benchmark.
+  Field layout ported from the upstream Rally Tracks / OpenSearch Benchmark workload.
 -->
 <schema name="geonames" version="1.6">
   <!-- Field Types -->
@@ -47,14 +63,14 @@
   <field name="_root_" type="string" indexed="true" stored="false" docValues="false" />
   <field name="_text_" type="text_general" indexed="true" stored="false" multiValued="true" />
 
-  <!-- Workload fields (auto-generated from OpenSearch mappings) -->
+  <!-- Workload fields -->
   <field name="elevation" type="pint" indexed="true" stored="true" />
   <field name="name" type="text_general" indexed="true" stored="true" />
   <field name="name_raw" type="string" indexed="true" stored="true" docValues="true" />
   <field name="geonameid" type="plong" indexed="true" stored="true" />
   <field name="feature_class" type="text_general" indexed="true" stored="true" />
   <field name="feature_class_raw" type="string" indexed="true" stored="true" docValues="true" />
-  <field name="location" type="string" indexed="true" stored="true" />
+  <field name="location" type="location_rpt" indexed="true" stored="true" />
   <field name="cc2" type="text_general" indexed="true" stored="true" />
   <field name="cc2_raw" type="string" indexed="true" stored="true" docValues="true" />
   <field name="timezone" type="text_general" indexed="true" stored="true" />
@@ -84,7 +100,7 @@
 
   <!-- Copy Fields for Multi-Field Support -->
 
-  <!-- Multi-field copyField directives (OpenSearch → Solr translation) -->
+  <!-- Multi-field copyField directives for keyword (exact-match) sub-fields -->
   <copyField source="name" dest="name_raw" />
   <copyField source="feature_class" dest="feature_class_raw" />
   <copyField source="cc2" dest="cc2_raw" />

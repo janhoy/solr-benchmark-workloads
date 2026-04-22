@@ -22,7 +22,6 @@
           "source-file": "documents.json.bz2",
           "compressed-bytes": 4820107188,
           {% endif %}
-          "#COMMENT": "ML benchmark relies on the fact that the document count stays constant.",
           "document-count": 165346692,
           "uncompressed-bytes": 79802445255
         }

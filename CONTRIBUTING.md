@@ -2,7 +2,7 @@
 
 This repository contains the default workload specifications for
 [Apache Solr Benchmark](https://github.com/janhoy/solr-benchmark).
-This document is a general guide on best practices for contributing to this repository.
+This document is a guide on best practices for contributing to this repository.
 
 ## Contents
 
@@ -19,17 +19,15 @@ This document is a general guide on best practices for contributing to this repo
 
 ## Before you start
 
-This is an Apache Software Foundation project. All contributors must have a signed
-[Apache Individual Contributor License Agreement (ICLA)](https://www.apache.org/licenses/icla.pdf)
-on file with the ASF before any contributions can be merged.
+By submitting a contribution to this repository you certify that you have the legal right
+to submit it under the Apache License 2.0 — for example, that it is your own original work,
+or that you have the necessary rights from your employer or from any third-party rights-holders
+whose work is included. You agree that your contribution may be distributed under the terms of
+the Apache License 2.0.
 
 For significant new features or design changes, it is recommended to first raise a discussion
 on the [dev@solr.apache.org](https://lists.apache.org/list.html?dev@solr.apache.org) mailing list
 or open a GitHub issue so the community can provide early feedback.
-
-All commits should be signed off with the `--signoff` flag (i.e. `git commit --signoff`) to
-certify that you wrote the patch or otherwise have the right to submit it under the project's
-open-source license.
 
 
 ## Contributing a change to existing workload(s)
@@ -78,8 +76,8 @@ To catch regressions across the full suite, run integration tests from your fork
 
 1. Fork [solr-benchmark](https://github.com/janhoy/solr-benchmark).
 2. In your fork, create a branch called `test-forked-workloads` based off `main`.
-3. In that branch, update `benchmark-os-it.ini` and `benchmark-in-memory.ini` under
-   `/osbenchmark/it/resources/` to point at your forked workloads repository:
+3. In that branch, update the integration test configuration to point at your forked workloads
+   repository:
 
 ```ini
 [workloads]
@@ -142,8 +140,21 @@ included in the backport PR.
 
 ## Contributing a workload
 
-See [USER_GUIDE.md](USER_GUIDE.md) for the structure of a workload, the role of the shared
-`common_operations/` library, and tips on writing test procedures.
+See the [Apache Solr Benchmark documentation site](https://janhoy.github.io/solr-benchmark/)
+for the full workload specification reference, including operation types, Jinja2 templating,
+and test procedure format.
+
+A new workload in this repository should at minimum provide:
+
+- `workload.json` — defining `collections`, `corpora`, `operations`, and `test_procedures`
+- `configsets/<name>/` — a valid Solr configset (`schema.xml` + `solrconfig.xml`)
+- `operations/default.json` — the named operations referenced by test procedures
+- `test_procedures/default.json` — at least one test procedure (mark one `"default": true`)
+- `README.md` — description, example document, and parameter reference
+- `files.txt` — list of corpus data files
+
+Reuse the shared `common_operations/` snippets for collection lifecycle and optimize steps
+rather than duplicating those definitions inside each workload.
 
 For questions about contributing a workload, reach out on the
 [dev@solr.apache.org](https://lists.apache.org/list.html?dev@solr.apache.org) mailing list or
