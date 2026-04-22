@@ -15,6 +15,11 @@ This document is a guide on best practices for contributing to this repository.
 - [Reviewing pull-requests](#reviewing-pull-requests)
   - [Backporting](#backporting)
 - [Contributing a workload](#contributing-a-workload)
+  - [Data and licensing](#data-and-licensing)
+  - [Required files](#required-files)
+  - [README.md contents](#readmemd-contents)
+  - [Testing a new workload](#testing-a-new-workload)
+  - [Data corpus hosting](#data-corpus-hosting)
 
 
 ## Before you start
@@ -144,18 +149,73 @@ See the [Apache Solr Benchmark documentation site](https://janhoy.github.io/solr
 for the full workload specification reference, including operation types, Jinja2 templating,
 and test procedure format.
 
-A new workload in this repository should at minimum provide:
+### Data and licensing
+
+Before contributing a workload, confirm that:
+
+- The dataset does not contain proprietary data or personally identifiable information (PII).
+- You hold, or have obtained, the rights to redistribute the dataset.
+- The open-source licence covering the dataset is documented in the workload's `README.md`.
+
+### Required files
+
+A new workload must provide:
 
 - `workload.json` — defining `collections`, `corpora`, `operations`, and `test_procedures`
-- `configsets/<name>/` — a valid Solr configset (`schema.xml` + `solrconfig.xml`)
+- `configsets/<name>/` — a valid Solr configset (`schema.xml` + `solrconfig.xml`). If no
+  configset is provided, Apache Solr Benchmark will attempt to auto-generate a basic schema
+  from the document structure, but an explicit configset is strongly recommended for
+  benchmarking accuracy.
 - `operations/default.json` — the named operations referenced by test procedures
 - `test_procedures/default.json` — at least one test procedure (mark one `"default": true`)
-- `README.md` — description, example document, and parameter reference
+- `README.md` — see [README.md contents](#readmemd-contents) below
 - `files.txt` — list of corpus data files
+
+The workload may also include an optional `workload.py` to add dynamic functionality.
 
 Reuse the shared `common_operations/` snippets for collection lifecycle and optimize steps
 rather than duplicating those definitions inside each workload.
 
-For questions about contributing a workload, reach out on the
+### README.md contents
+
+Provide a detailed `README.md` that includes:
+
+- The purpose of the workload and how it differs from other workloads in this repository.
+- An example document from the dataset that illustrates the data's structure.
+- The workload parameters that can be used to customize the workload.
+- A list of default and available test procedures.
+- A sample of the console output produced after a successful test run.
+- The open-source licence that gives users and Apache Solr Benchmark permission to use the
+  dataset.
+
+For an example, see the [`nyc_taxis` README](https://github.com/janhoy/solr-benchmark-workloads/blob/main/nyc_taxis/README.md).
+
+### Testing a new workload
+
+All test runs used to produce example output must target a live Apache Solr cluster.
+
+1. Run with `--test-mode` against at least one supported Solr version to confirm a clean
+   end-to-end pass:
+
+   ```bash
+   solr-benchmark run \
+     --pipeline=benchmark-only \
+     --target-host=localhost:8983 \
+     --workload-path=/path/to/your/workload \
+     --test-mode
+   ```
+
+2. Run a **full (non-test-mode)** benchmark without errors and include the result summary in
+   your pull request description.
+
+3. Optionally, run the integration suite using the steps in
+   [Testing changes with integration tests](#testing-changes-with-integration-tests).
+
+### Data corpus hosting
+
+Once the PR is approved, coordinate with the maintainers about hosting the data corpora so
+that other users can download them.
+
+For questions, reach out on the
 [dev@solr.apache.org](https://lists.apache.org/list.html?dev@solr.apache.org) mailing list or
 open a [GitHub issue](https://github.com/janhoy/solr-benchmark-workloads/issues).
