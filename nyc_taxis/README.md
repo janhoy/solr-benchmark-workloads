@@ -102,12 +102,9 @@ procedures above:
 | `match-all` | `*:*` | Full-collection match |
 | `range` | `total_amount:[5 TO 15]` | Range filter on a float field |
 | `distance_amount_facet` | `trip_distance:[0 TO 50]` + range facet | Range facet on `trip_distance` |
-| `date_histogram_facet` | Date range, `+1DAY` gap | Daily dropoff histogram |
-| `date_histogram_calendar_interval` | Date range, `+1MONTH` gap | Monthly histogram |
-| `date_histogram_calendar_interval_with_tz` | Same, with timezone | Monthly histogram |
-| `date_histogram_fixed_interval` | Date range, `+1MONTH` gap | Monthly histogram (fixed) |
-| `date_histogram_fixed_interval_with_tz` | Same, with timezone | Monthly histogram (fixed) |
-| `date_histogram_fixed_interval_with_metrics` | Same, with metrics | Monthly histogram + metrics |
+| `date_histogram_facet` | Date range, `+1DAY` gap | Daily dropoff histogram (first 21 days of Jan 2015) |
+| `date_histogram_calendar_interval` | Date range, `+1MONTH` gap | Monthly histogram, calendar-aligned buckets |
+| `date_histogram_fixed_interval` | Date range, `+30DAY` gap | Monthly histogram, fixed-width buckets |
 | `desc_sort_tip_amount` | `*:*` sort `tip_amount desc` | Descending sort |
 | `asc_sort_tip_amount` | `*:*` sort `tip_amount asc` | Ascending sort |
 | `desc_sort_passenger_count` | `*:*` sort `passenger_count desc` | Descending sort |
@@ -178,6 +175,7 @@ Per-operation overrides follow the pattern `<operation_name>_target_throughput`,
 
 ## License
 
-The NYC TLC dataset is published under the
-[NYC Open Data Law](https://opendata.cityofnewyork.us/open-data-law/) and is available as
-public domain.
+The dataset originates from the
+[NYC Taxi and Limousine Commission (TLC) Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+and is published by the City of New York under the
+[NYC Open Data Law](https://opendata.cityofnewyork.us/open-data-law/) as public domain.

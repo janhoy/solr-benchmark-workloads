@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  NYC Taxis workload schema — adapted from OpenSearch mappings.
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements. See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  NYC Taxis workload schema for Apache Solr Benchmark.
+  Field layout ported from the upstream Rally Tracks / OpenSearch Benchmark workload.
 -->
 <schema name="nyc_taxis" version="1.6">
   <!-- Field Types -->
@@ -47,7 +63,7 @@
   <field name="_root_" type="string" indexed="true" stored="false" docValues="false" />
   <field name="_text_" type="text_general" indexed="true" stored="false" multiValued="true" />
 
-  <!-- Workload fields (auto-generated from OpenSearch mappings) -->
+  <!-- Workload fields -->
   <field name="surcharge" type="pdouble" indexed="true" stored="true" />
   <field name="dropoff_datetime" type="pdate" indexed="true" stored="true" />
   <field name="trip_type" type="string" indexed="true" stored="true" docValues="true" />
@@ -56,7 +72,7 @@
   <field name="passenger_count" type="pint" indexed="true" stored="true" />
   <field name="pickup_datetime" type="pdate" indexed="true" stored="true" />
   <field name="tolls_amount" type="pdouble" indexed="true" stored="true" />
-  <field name="tip_amount" type="pfloat" indexed="true" stored="true" />
+  <field name="tip_amount" type="pdouble" indexed="true" stored="true" />
   <field name="payment_type" type="string" indexed="true" stored="true" docValues="true" />
   <field name="extra" type="pdouble" indexed="true" stored="true" />
   <field name="vendor_id" type="string" indexed="true" stored="true" docValues="true" />
@@ -65,11 +81,11 @@
   <field name="fare_amount" type="pdouble" indexed="true" stored="true" />
   <field name="ehail_fee" type="pdouble" indexed="true" stored="true" />
   <field name="cab_color" type="string" indexed="true" stored="true" docValues="true" />
-  <field name="dropoff_location" type="string" indexed="true" stored="true" />
+  <field name="dropoff_location" type="location_rpt" indexed="true" stored="true" />
   <field name="vendor_name" type="text_general" indexed="true" stored="true" />
   <field name="total_amount" type="pdouble" indexed="true" stored="true" />
   <field name="trip_distance" type="pdouble" indexed="true" stored="true" />
-  <field name="pickup_location" type="string" indexed="true" stored="true" />
+  <field name="pickup_location" type="location_rpt" indexed="true" stored="true" />
 
   <!-- Unique Key -->
   <uniqueKey>id</uniqueKey>

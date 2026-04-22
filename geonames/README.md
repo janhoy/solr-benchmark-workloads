@@ -1,13 +1,18 @@
 ## Geonames workload
 
-This workload is based on a [geonames](http://www.geonames.org/) dump of the file [allCountries.zip](http://download.geonames.org/export/dump/allCountries.zip) retrieved as of April 27, 2017.
+This workload is based on a [geonames](http://www.geonames.org/) dump of the file
+[allCountries.zip](http://download.geonames.org/export/dump/allCountries.zip) retrieved as of
+**April 27, 2017**. This is a **fixed historical snapshot** — it is not updated as the live
+Geonames database changes — which ensures reproducible benchmark results across runs and time.
 
-For further details about the semantics of individual fields, please see the [geonames dump README](http://download.geonames.org/export/dump/readme.txt).
+For further details about the semantics of individual fields, please see the
+[geonames dump README](http://download.geonames.org/export/dump/readme.txt).
 
-Modifications:
+Modifications from the original data:
 
 * The original CSV data have been converted to JSON.
-* We combine the original `longitude` and `latitude` fields into a new `location` field.
+* The original `longitude` and `latitude` fields are combined into a single `location` field
+  (`[longitude, latitude]` array in GeoJSON order).
 
 ### Example Document
 
@@ -44,6 +49,7 @@ This workload allows the following parameters via `--workload-params`:
 
 * `bulk_size` (default: `5000`): Number of documents per bulk indexing request.
 * `bulk_indexing_clients` (default: `8`): Number of clients that issue bulk indexing requests.
+* `warmup_time_period` (default: `120`): Seconds of indexing warm-up before measurements begin.
 * `ingest_percentage` (default: `100`): A number between 0 and 100 that defines how much of the document corpus should be ingested.
 * `conflicts` (default: `"random"`): Type of id conflicts to simulate. Valid values are `sequential` (a document id is replaced with a sequentially increasing id) and `random` (replaced with a random other id).
 * `conflict_probability` (default: `25`): A number between 0 and 100 that defines the probability of id conflicts. Only applies when running `index-update` operations.
@@ -70,7 +76,9 @@ This workload allows the following parameters via `--workload-params`:
 
 ### License
 
-We use the same license for the data as the original data from Geonames:
+The data originates from [GeoNames](https://www.geonames.org/) and is licensed under the
+[Creative Commons Attribution 3.0 License](https://creativecommons.org/licenses/by/3.0/).
+Use of this data requires crediting GeoNames as the source.
 
 ```
 This work is licensed under a Creative Commons Attribution 3.0 License,

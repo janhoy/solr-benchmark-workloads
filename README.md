@@ -11,28 +11,54 @@ the macrobenchmarking framework for [Apache Solr](https://solr.apache.org/).
 You do not need to interact with this repository directly unless you want to inspect existing
 workloads, run benchmarks with a custom workload, or contribute a new workload.
 
-## How to contribute a change
+## Documentation
 
-See an area to make improvements or add support? Follow these steps:
+Full documentation — including how to run workloads, workload structure, operation types,
+parameters, and how to write custom workloads — is available on the
+**[Apache Solr Benchmark documentation site](https://janhoy.github.io/solr-benchmark/)**.
 
-1. Fork this repository and create a feature branch from `main`.
-2. Make your change and test it locally against a running Solr cluster using `solr-benchmark`
-   in `--test-mode`.
-3. Open a pull request against `main` of this repository, describing what you changed and how
-   you tested it.
+## Quick start
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for full details.
+```bash
+# Run the default nyc_taxis workload against a local Solr cluster
+solr-benchmark run \
+  --pipeline=benchmark-only \
+  --target-host=localhost:8983 \
+  --workload=nyc_taxis \
+  --test-mode
 
-## How to contribute a workload
+# Or provision Solr via Docker and benchmark
+solr-benchmark run \
+  --pipeline=docker \
+  --distribution-version=9.10.1 \
+  --workload=nyc_taxis \
+  --test-mode
+```
 
-See [USER_GUIDE.md](USER_GUIDE.md) for the structure of a workload and the shared
-`common_operations/` library.
+## Workloads in this repository
+
+| Workload | Description |
+|----------|-------------|
+| [`geonames`](geonames/README.md) | 11M geographic points-of-interest; text search, faceting, sorting |
+| [`nyc_taxis`](nyc_taxis/README.md) | 165M NYC taxi trips from 2015; range filters, date facets, sorting |
+
+## How to contribute
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to test your changes locally, open a pull request,
+and contribute a new workload.
 
 ## Getting help
 
 - Questions and discussion: [dev@solr.apache.org](https://lists.apache.org/list.html?dev@solr.apache.org)
 - Bug reports and feature requests: [GitHub Issues](https://github.com/janhoy/solr-benchmark-workloads/issues)
-- Benchmark tool documentation: [solr-benchmark README](https://github.com/janhoy/solr-benchmark/blob/main/README.md)
+- Benchmark tool documentation: [Apache Solr Benchmark docs](https://janhoy.github.io/solr-benchmark/)
+
+## Data hosting
+
+> **FIXME (pre-ASF):** The corpus data files referenced by the workloads in this repository are
+> currently hosted on a CloudFront distribution that is not operated by the Apache Software
+> Foundation. Before or shortly after the ASF donation, the data must be migrated to
+> ASF-managed infrastructure or another stable, community-controlled host.
 
 ## License
 

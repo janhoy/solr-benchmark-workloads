@@ -2,7 +2,7 @@
 
 This repository contains the default workload specifications for
 [Apache Solr Benchmark](https://github.com/janhoy/solr-benchmark).
-This document is a general guide on best practices for contributing to this repository.
+This document is a guide on best practices for contributing to this repository.
 
 ## Contents
 
@@ -15,21 +15,24 @@ This document is a general guide on best practices for contributing to this repo
 - [Reviewing pull-requests](#reviewing-pull-requests)
   - [Backporting](#backporting)
 - [Contributing a workload](#contributing-a-workload)
+  - [Data and licensing](#data-and-licensing)
+  - [Required files](#required-files)
+  - [README.md contents](#readmemd-contents)
+  - [Testing a new workload](#testing-a-new-workload)
+  - [Data corpus hosting](#data-corpus-hosting)
 
 
 ## Before you start
 
-This is an Apache Software Foundation project. All contributors must have a signed
-[Apache Individual Contributor License Agreement (ICLA)](https://www.apache.org/licenses/icla.pdf)
-on file with the ASF before any contributions can be merged.
+By submitting a contribution to this repository you certify that you have the legal right
+to submit it under the Apache License 2.0 — for example, that it is your own original work,
+or that you have the necessary rights from your employer or from any third-party rights-holders
+whose work is included. You agree that your contribution may be distributed under the terms of
+the Apache License 2.0.
 
 For significant new features or design changes, it is recommended to first raise a discussion
 on the [dev@solr.apache.org](https://lists.apache.org/list.html?dev@solr.apache.org) mailing list
 or open a GitHub issue so the community can provide early feedback.
-
-All commits should be signed off with the `--signoff` flag (i.e. `git commit --signoff`) to
-certify that you wrote the patch or otherwise have the right to submit it under the project's
-open-source license.
 
 
 ## Contributing a change to existing workload(s)
@@ -78,8 +81,8 @@ To catch regressions across the full suite, run integration tests from your fork
 
 1. Fork [solr-benchmark](https://github.com/janhoy/solr-benchmark).
 2. In your fork, create a branch called `test-forked-workloads` based off `main`.
-3. In that branch, update `benchmark-os-it.ini` and `benchmark-in-memory.ini` under
-   `/osbenchmark/it/resources/` to point at your forked workloads repository:
+3. In that branch, update the integration test configuration to point at your forked workloads
+   repository:
 
 ```ini
 [workloads]
@@ -142,9 +145,77 @@ included in the backport PR.
 
 ## Contributing a workload
 
-See [USER_GUIDE.md](USER_GUIDE.md) for the structure of a workload, the role of the shared
-`common_operations/` library, and tips on writing test procedures.
+See the [Apache Solr Benchmark documentation site](https://janhoy.github.io/solr-benchmark/)
+for the full workload specification reference, including operation types, Jinja2 templating,
+and test procedure format.
 
-For questions about contributing a workload, reach out on the
+### Data and licensing
+
+Before contributing a workload, confirm that:
+
+- The dataset does not contain proprietary data or personally identifiable information (PII).
+- You hold, or have obtained, the rights to redistribute the dataset.
+- The open-source licence covering the dataset is documented in the workload's `README.md`.
+
+### Required files
+
+A new workload must provide:
+
+- `workload.json` — defining `collections`, `corpora`, `operations`, and `test_procedures`
+- `configsets/<name>/` — a valid Solr configset (`schema.xml` + `solrconfig.xml`). If no
+  configset is provided, Apache Solr Benchmark will attempt to auto-generate a basic schema
+  from the document structure, but an explicit configset is strongly recommended for
+  benchmarking accuracy.
+- `operations/default.json` — the named operations referenced by test procedures
+- `test_procedures/default.json` — at least one test procedure (mark one `"default": true`)
+- `README.md` — see [README.md contents](#readmemd-contents) below
+- `files.txt` — list of corpus data files
+
+The workload may also include an optional `workload.py` to add dynamic functionality.
+
+Reuse the shared `common_operations/` snippets for collection lifecycle and optimize steps
+rather than duplicating those definitions inside each workload.
+
+### README.md contents
+
+Provide a detailed `README.md` that includes:
+
+- The purpose of the workload and how it differs from other workloads in this repository.
+- An example document from the dataset that illustrates the data's structure.
+- The workload parameters that can be used to customize the workload.
+- A list of default and available test procedures.
+- A sample of the console output produced after a successful test run.
+- The open-source licence that gives users and Apache Solr Benchmark permission to use the
+  dataset.
+
+For an example, see the [`nyc_taxis` README](https://github.com/janhoy/solr-benchmark-workloads/blob/main/nyc_taxis/README.md).
+
+### Testing a new workload
+
+All test runs used to produce example output must target a live Apache Solr cluster.
+
+1. Run with `--test-mode` against at least one supported Solr version to confirm a clean
+   end-to-end pass:
+
+   ```bash
+   solr-benchmark run \
+     --pipeline=benchmark-only \
+     --target-host=localhost:8983 \
+     --workload-path=/path/to/your/workload \
+     --test-mode
+   ```
+
+2. Run a **full (non-test-mode)** benchmark without errors and include the result summary in
+   your pull request description.
+
+3. Optionally, run the integration suite using the steps in
+   [Testing changes with integration tests](#testing-changes-with-integration-tests).
+
+### Data corpus hosting
+
+Once the PR is approved, coordinate with the maintainers about hosting the data corpora so
+that other users can download them.
+
+For questions, reach out on the
 [dev@solr.apache.org](https://lists.apache.org/list.html?dev@solr.apache.org) mailing list or
 open a [GitHub issue](https://github.com/janhoy/solr-benchmark-workloads/issues).
